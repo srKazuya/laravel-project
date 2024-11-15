@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArticleController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +21,7 @@ use App\Http\Controllers\AuthController;
 route::get('/auth/signup', [AuthController::class,'signup']);
 route::post('/aut/registr', [AuthController::class,'registr']);
 
-
+route::resource('/article', ArticleController::class);
 
 route::get('/', [MainController::class, 'index' ]);
 route::get('/galery/{img}', function($img){

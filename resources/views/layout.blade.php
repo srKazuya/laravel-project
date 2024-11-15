@@ -846,8 +846,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li>
+                            <a class="nav-link active" aria-current="page" href="/article">Article </a>                        </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">О нас </a>
+                            <a class="nav-link active" aria-current="page" href="/about">О нас </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Контакты</a>
