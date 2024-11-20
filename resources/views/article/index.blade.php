@@ -24,11 +24,11 @@
 
     </tr>
   </thead>
-  <tbody>
+  <tbody class="mt-4">
     @foreach($articles as $article)
     <tr>
       <th scope="row">{{$article->date}}</th>
-      <td><a class='' href="/article/{{$article->id}}">{{$article->name}}</a></td>
+      <td><a class='text-primary' href="/article/{{$article->id}}">{{$article->name}}</a></td>
       <td>{{$article->desc}}</td>
       <td>{{ User::find($article->user_id)->name }}</td>     
     </tr>
