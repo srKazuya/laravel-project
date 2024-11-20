@@ -849,7 +849,10 @@
                         <li>
                             <a class="nav-link active" aria-current="page" href="/article">Article </a>                        </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/about">О нас </a>
+                        <li>
+                            <a class="nav-link active" href="/article/create">Create Article </a>                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/about">О нас </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Контакты</a>
