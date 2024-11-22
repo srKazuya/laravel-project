@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\User;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
+use App\Models\Comment;
 
 
 
@@ -62,10 +63,16 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $user = User::findOrFail($article->user_id);
-        return view('article.show', ['article'=>$article, 'user'=>$user]);
-        // compact('article')
+        $user = User::findOrFail($article->user_id); 
+        $comments = Comment::where('article_id', $article->id)->get(); 
+    
+        return view('article.show', [
+            'article' => $article,
+            'user' => $user,
+            'comments' => $comments,
+        ]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.

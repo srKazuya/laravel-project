@@ -42,6 +42,10 @@ route::get('/contact', function(){
     ];
     return view('main.contact', ['data' => $data]);
 });
+
+Route::post('/article/{article}/comment', [CommentController::class, 'store'])->name('comment.store');
+
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
