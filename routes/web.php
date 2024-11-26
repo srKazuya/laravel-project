@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 
 
 
@@ -43,9 +44,12 @@ route::get('/contact', function(){
     return view('main.contact', ['data' => $data]);
 });
 
-Route::post('/article/{article}/comment', [CommentController::class, 'store'])->name('comment.store');
-
-
+//comment
+// Route::post('/article/{article}/comment', [CommentController::class, 'store'])->name('comment.store');
+Route::post('/comment', [CommentController::class, 'store']); 
+Route::get('/comment/{id}/edit', [CommentController::class, 'edit']); 
+Route::put('/comment/{comment}/update', [CommentController::class, 'update']); 
+Route::get('/comment/{id}/delete', [CommentController::class, 'delete']); 
 // Route::get('/', function () {
 //     return view('welcome');
 // });

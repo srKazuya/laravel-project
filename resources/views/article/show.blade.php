@@ -1,6 +1,57 @@
 @extends('layout')
 
+
+@if ($errors->any())
+    <div aria-live="polite" aria-atomic="true">
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+            @foreach ($errors->all() as $error)
+                <div class="toast align-items-center text-bg-danger border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ $error }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
+
 @section('content')
+    @if (session('success'))
+        <div aria-live="polite" aria-atomic="true">
+            <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-success border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('success') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div aria-live="polite" aria-atomic="true">
+            <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+                <div class="toast align-items-center text-bg-danger border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('error') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+
+
 <div class="card text-center mt-4">
     <div class="card-header fw-bold">
       {{ $article->name }}
@@ -30,13 +81,26 @@
     @else
         <div class="list-group mt-4">
             @foreach ($comments as $comment)
+            <div class="list-group mt-4">
+                @foreach ($comments as $comment)
                 <div class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1 fw-bold ">{{ $comment->name }}</h5>
+                        <h5 class="mb-1 fw-bold">{{ $comment->name }}</h5>
                         <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
                     </div>
                     <p class="mb-1">{{ $comment->desc }}</p>
+                    <div class="d-flex justify-content-end mt-2">
+                        <a href="/comment/{{ $comment->id }}/edit" class="btn btn-secondary btn-sm">Редактировать</a>
+                        <a href="/comment/{{ $comment->id }}/delete" class="btn btn-danger btn-sm ms-2" 
+                           onclick="return confirm('Вы уверены, что хотите удалить этот комментарий?');">
+                            <i class="bi bi-trash"></i> Удалить
+                        </a>
+                    </div>
                 </div>
+                
+                @endforeach
+            </div>
+            
             @endforeach
         </div>
     @endif
@@ -44,7 +108,8 @@
 
 <div class="mt-5">
   <h4>Добавить комментарий</h4>
-  <form action="{{ route('comment.store', $article->id) }}" method="POST">
+
+  <form action="/comment" method="POST">
       @csrf
       <div class="mb-3">
           <label for="name" class="form-label">Ваше имя</label>
@@ -54,8 +119,16 @@
           <label for="desc" class="form-label">Ваш комментарий</label>
           <textarea class="form-control" id="desc" name="desc" rows="4" required></textarea>
       </div>
+      <input type="hidden" name="article_id" value="{{$article->id}}">
       <button type="submit" class="btn btn-primary">Отправить</button>
   </form>
 </div>
-
+<script>
+    // Отображение всплывающих уведомлений (toast) при ошибках и сессионных сообщениях
+    document.addEventListener('DOMContentLoaded', () => {
+        var toastElements = document.querySelectorAll('.toast');
+        var toastList = [...toastElements].map(toastElement => new bootstrap.Toast(toastElement));
+        toastList.forEach(toast => toast.show());
+    });
+</script>
 @endsection
