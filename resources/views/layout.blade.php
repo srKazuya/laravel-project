@@ -861,8 +861,14 @@
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <a href="/auth/signup" class="btn btn-outline-success" type="submit">SignUp</a>
-                        <button class="btn btn-outline-success" type="submit">SignUp</button>
+                        @guest
+                            <a href="/auth/signup" class="btn btn-outline-success" type="submit">SignUp</a>
+                            <a href="/auth/login" class="btn btn-outline-success" type="submit">SignIn</a>
+                            @endguest
+                            @auth
+                            <a href="/auth/logout" class="btn btn-outline-success" type="submit">Logout</a>
+                            @endauth
+
                     </form>
                 </div>
             </div>
