@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
+
+
+    public function index(){
+        $comments = Comment::all();
+        return view('comments.index', ['comments' => $comments]);
+    }
+
+
     public function store(Request $request){
         $request->validate([
             'name' => 'required',

@@ -858,7 +858,7 @@
                             <a class="nav-link active" href="/about">О нас </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Контакты</a>
+                            <a class="nav-link" href="/comments">Коментарии</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">

@@ -106,7 +106,7 @@
         <form action="/comment" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="name" class="form-label">Ваше имя</label>
+                <label for="name" class="form-label">Название коментария</label>
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">

@@ -30,6 +30,7 @@ route::get('auth/logout', [AuthController::class,'logout']);
 //Article
 route::resource('/article', ArticleController::class)->middleware('auth:sanctum');
 
+
 route::get('/', [MainController::class, 'index' ]);
 route::get('/galery/{img}', function($img){
     return view('main.galery', ['img' => $img, 'name' => 'name']);
@@ -67,3 +68,5 @@ Route::controller(CommentController::class)
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+//Comments
+route::resource('/comments', CommentController::class);
