@@ -7,6 +7,7 @@ use App\Models\User;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Gate;
 
 
 
@@ -35,11 +36,12 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'date' =>'required|date',
-            'name' =>'required|max:255',
-            'desc' =>'required|max:255',
+        Gate::authorize('create', [self::class]);
 
+        $request->validate([
+            'date' => 'required|date',
+            'name' => 'required|max:255',
+            'desc' => 'required|max:255',
         ]);
 
         $article = new Article();
@@ -50,12 +52,10 @@ class ArticleController extends Controller
 
 
         // Article::create($request->all());
-        $article ->save();
+        $article->save();
         return redirect('/article');
         if ($aricle->save()) return redirect('/article');
         else return back()->withInput()->withErrors(['error' => 'Could not save article']);
-
-
     }
 
     /**
@@ -63,23 +63,23 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $user = User::findOrFail($article->user_id); 
-        $comments = Comment::where('article_id', $article->id)->get(); 
-    
+        $user = User::findOrFail($article->user_id);
+        $comments = Comment::where('article_id', $article->id)->get();
+
         return view('article.show', [
             'article' => $article,
             'user' => $user,
             'comments' => $comments,
         ]);
     }
-    
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Article $article)
     {
-        return view('article.update', ['article'=>$article]);
+        return view('article.update', ['article' => $article]);
         // compact('article')
     }
 
@@ -88,11 +88,14 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        $request->validate([
-            'date' =>'required|date',
-            'name' =>'required|max:255',
-            'desc' =>'required|max:255',
 
+        Gate::authorize('update', $article);
+
+
+        $request->validate([
+            'date' => 'required|date',
+            'name' => 'required|max:255',
+            'desc' => 'required|max:255',
         ]);
 
         $article->date = $request->date;
@@ -102,13 +105,13 @@ class ArticleController extends Controller
 
 
 
-    if ($article->save()) {
-    
-        return redirect('/article')->with('success', 'Article updated successfully.');
-    } else {
+        if ($article->save()) {
 
-        return redirect()->back()->with('error', 'Failed to update article.');
-    }
+            return redirect('/article')->with('success', 'Article updated successfully.');
+        } else {
+
+            return redirect()->back()->with('error', 'Failed to update article.');
+        }
     }
 
     /**
@@ -116,6 +119,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        Gate::authorize('delete', [self::class]);
+
         // Пытаемся удалить статью
         if ($article->delete()) {
             // Если удаление успешно, перенаправляем с сообщением об успехе

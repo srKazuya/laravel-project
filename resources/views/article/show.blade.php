@@ -54,6 +54,7 @@
         </div>
         <div class="card-body">
             <p class="card-text text-start">{{ $article->desc }}</p>
+            @can('update')
             <div class="d-flex justify-content-end gap-3 mt-4">
                 <a href="/article/{{ $article->id }}/edit" class="btn btn-primary">Edit article</a>
                 <form action="/article/{{ $article->id }}" method="POST">
@@ -62,6 +63,7 @@
                     <button type="submit" class="btn btn-danger">Delete article</button>
                 </form>
             </div>
+            @endcan
         </div>
         <div class="card-footer text-body-secondary d-flex justify-content-between">
             <span class="text-xxl-start"> Author: {{ $user->name }}</span>
@@ -83,6 +85,7 @@
                         </div>
                         <p class="mb-1">{{ $comment->desc }}</p>
                         <div class="d-flex justify-content-end mt-2">
+                        
                             @can('update_comment', $comment) 
                                 <a href="/comment/{{ $comment->id }}/edit" class="btn btn-secondary btn-sm">Редактировать</a>
                                 <a href="/comment/{{ $comment->id }}/delete" class="btn btn-danger btn-sm ms-2" 
