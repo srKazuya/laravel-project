@@ -8,6 +8,7 @@ use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
+use App\Events\NewArticleEvent;
 
 
 
@@ -52,10 +53,13 @@ class ArticleController extends Controller
 
 
         // Article::create($request->all());
-        $article->save();
-        return redirect('/article');
-        if ($aricle->save()) return redirect('/article');
-        else return back()->withInput()->withErrors(['error' => 'Could not save article']);
+        if($article->save()){
+            NewArticleEvent::dispatch($article);
+            return redirect('/article');
+            if ($aricle->save()) return redirect('/article');
+            else return back()->withInput()->withErrors(['error' => 'Could not save article']);
+        }
+
     }
 
     /**
@@ -64,7 +68,10 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $user = User::findOrFail($article->user_id);
-        $comments = Comment::where('article_id', $article->id)->get();
+        $comments = Comment::
+        where('article_id', $article->id)
+        -> where('accept', true)
+        ->get();
 
         return view('article.show', [
             'article' => $article,

@@ -59,8 +59,12 @@ Route::controller(CommentController::class)
     ->group(function () {
         Route::post('', 'store'); // Создание комментария
         Route::get('/{id}/edit', 'edit'); // Форма редактирования комментария
-        Route::put('/{id}/update', 'update'); // Обновление комментария
+        Route::put('/{comment}/update', 'update'); // Обновление комментария
         Route::get('/{id}/delete', 'delete'); 
+        Route::get('/index', 'index')->name('comment.index'); 
+        Route::get('/{comment}/accept', 'accept'); 
+        Route::get('/{comment}/reject', 'reject'); 
+        
     });
 
 // Route::post('/article/{article}/comment', [CommentController::class, 'store'])->name('comment.store');
@@ -69,4 +73,4 @@ Route::controller(CommentController::class)
 //     return view('welcome');
 // });
 //Comments
-route::resource('/comments', CommentController::class);
+// route::resource('/comments', CommentController::class);

@@ -31,6 +31,11 @@
       <td>{{$comment->desc}}</td>
       <td>{{$comment->created_at->diffForHumans() }}</td>
       <td>{{ User::find($comment->user_id)->name }}</td>
+      @if(!$comment->accept)
+      <td><a class="btn btn-success" href="/comment/{{$comment->id}}/accept">Accept</a></td>
+      @else
+      <td><a class="btn btn-danger" href="/comment/{{$comment->id}}/reject">Reject</a></td>
+      @endif
       {{-- <td>{{ User::find($article->user_id)->name }}</td>      --}}
     </tr>
     @endforeach
