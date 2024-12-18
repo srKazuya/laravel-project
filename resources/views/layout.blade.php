@@ -850,14 +850,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li>
-                            <a class="nav-link active" aria-current="page" href="/article">Article </a>                        </li>
+                            <a class="nav-link @active('article')" aria-current="page" href="/article">Article </a>                        </li>
                         <li class="nav-item">
                         @can('create')
                         <li>
-                            <a class="nav-link active" href="/article/create">Create Article </a>                        </li>
+                            <a class="nav-link @active('article/create')" href="/article/create">Create Article </a>                        </li>
                         <li class="nav-item">
                             @endcan
-                            <a class="nav-link active" href="/about">О нас </a>
+                            <a class="nav-link @active('about')" href="/about">О нас </a>
                             @auth
                         </li>
                                 <li class="nav-item dropdown">
@@ -876,7 +876,7 @@
                       
                         <li><a href=""></a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/comment/index">Коментарии</a>
+                            <a class="nav-link @active('comment/index') " href="/comment/index">Коментарии</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">

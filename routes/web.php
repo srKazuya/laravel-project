@@ -29,7 +29,7 @@ route::get('auth/logout', [AuthController::class,'logout']);
 
 //Article
 route::resource('/article', ArticleController::class)->middleware('auth:sanctum');
-
+Route::get('/article/{article}', [ArticleController::class, 'show'])->name('article.show')->middleware('click');
 
 route::get('/', [MainController::class, 'index' ]);
 route::get('/galery/{img}', function($img){
